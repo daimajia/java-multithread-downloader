@@ -1,8 +1,6 @@
 java-multithread-downloader
 ===========================
 
-###What is java-multithread-downloader?
-
 ###What?
 
 Java-multithread-downloader is a java download library which supports multithread.
