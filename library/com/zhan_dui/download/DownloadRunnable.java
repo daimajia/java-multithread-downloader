@@ -68,7 +68,7 @@ public class DownloadRunnable implements Runnable {
 	public void run() {
 		File targetFile;
 		synchronized (this) {
-			File dir = new File(mSaveDirectory + File.pathSeparator);
+			File dir = new File(mSaveDirectory + File.separator);
 			if (dir.exists() == false) {
 				dir.mkdirs();
 			}
@@ -119,7 +119,7 @@ public class DownloadRunnable implements Runnable {
 			}
 			bufferedInputStream.close();
 			randomAccessFile.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
