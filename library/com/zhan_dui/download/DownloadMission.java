@@ -67,6 +67,8 @@ public class DownloadMission {
 
 	private static int MISSION_ID_COUNTER = 0;
 
+	private CallBackable callBackable;
+
 	static class RecoveryRunnableInfo {
 
 		private int mStartPosition;
@@ -75,7 +77,7 @@ public class DownloadMission {
 		private boolean isFinished = false;
 
 		public RecoveryRunnableInfo(int start, int current, int end) {
-			if (end > start && current > start) {
+			if (end > start && current >= start) {//if current == start,allow recovery.
 				mStartPosition = start;
 				mEndPosition = end;
 				mCurrentPosition = current;
@@ -121,10 +123,14 @@ public class DownloadMission {
 			mHostMission = monitorBelongsTo;
 		}
 
-		public void down(int size) {
+		public void down(int size) throws Exception{
 			mDownloadedSize.addAndGet(size);
-			if (mDownloadedSize.intValue() == mHostMission.getFileSize()) {
+			if (mDownloadedSize.intValue() >= mHostMission.getFileSize()) {// sometimes the downloadsize bigger than the filesize.
 				mHostMission.setDownloadStatus(FINISHED);
+				System.out.println(" dsize = "+mDownloadedSize.intValue()+"  fs = "+mHostMission.getFileSize());
+				if (mHostMission.callBackable != null) {// call callbackable to do sth.
+					mHostMission.callBackable.callback(mHostMission);
+				}
 			}
 		}
 
@@ -301,10 +307,15 @@ public class DownloadMission {
 		try {
 			File progressFile = new File(FileUtils.getSafeDirPath(mProgressDir)
 					+ File.separator + mProgressFileName);
+
+
 			if (progressFile.exists() == false) {
 				throw new IOException("Progress File does not exsist");
 			}
-
+			if (progressFile.length() < 100) {//when first run ,the progressFile is almost empty,then exception occurred while jaxb unmarshal.
+				System.out.println("progressFile < 0.1 k ，no resume mission need!");
+				return;
+			}
 			JAXBContext context = JAXBContext
 					.newInstance(DownloadMission.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -537,5 +548,9 @@ public class DownloadMission {
 		mSpeedTimer.cancel();
 		mDownloadParts.clear();
 		mThreadPoolRef.cancel(mMissionID);
+	}
+
+	public void setlCallBackable(CallBackable callBackable) {
+		this.callBackable = callBackable;
 	}
 }
