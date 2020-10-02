@@ -1,11 +1,11 @@
 java-multithread-downloader
 ===========================
 
-###What?
+## What?
 
 Java-multithread-downloader is a java download library which supports multithread.
 
-###How?
+## How?
 
 ```java
 
@@ -31,7 +31,7 @@ downloadManager.start();
 
 ```
 
-###I'm sure, it's convinient
+## I'm sure, it's convinient.
 
 There are some useful method you can use:
 
@@ -54,15 +54,15 @@ mission.getTimePassed() //get download time
 mission.pause() //pause this mission ,and it will automatically resume when you start again. 
 
 ```
-###Notice
+## Notice
 
 This library is still under construction and I need your help. if you get some bugs,please feel free to issue or [Email me](mailto:daimajia@gmail.com).
 
-###Licence
+## Licence
 
 MIT
 
-###About me
+## About me
 
 I am a common senior student in China 22 years old. Good at Php,Java,Android,NodeJS. I just want to make a good app. If there is any intern opportunity and you think I'm suitable, welcome to email me:  [Email Me](mailto:smallbeardict@163.com)
 
