@@ -9,6 +9,8 @@ Java-multithread-downloader is a java download library which supports multithrea
 
 ```java
 
+//Good Work 
+
 //Step0: we need a download manager
 
 DownloadManager downloadManager = DownloadManager.getInstance(); 
